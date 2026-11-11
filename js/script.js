@@ -50,8 +50,11 @@ const renderNews = (items) => {
   }).join('');
 
   newsList.querySelectorAll('.news-card').forEach((card) => {
-    const openNews = () => { window.location.href = card.dataset.url; };
-    card.addEventListener('click', openNews);
+    const openNews = () => { window.open(card.dataset.url, '_blank', 'noopener,noreferrer'); };
+    card.addEventListener('click', (event) => {
+      event.preventDefault();
+      openNews();
+    });
     card.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
