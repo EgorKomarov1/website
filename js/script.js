@@ -36,8 +36,8 @@ const renderNews = (items) => {
       : '';
     const excerpt = (item.text || '').replace(/\s+/g, ' ').trim().slice(0, 150);
     return `<article class="news-card ${index === 0 ? 'featured' : ''}">
-      <div class="news-image image-${['blue', 'yellow', 'green'][index % 3]}">${image}<span>${formatDate(item.published_at)}</span></div>
-      <div class="news-content"><p class="tag">Новости</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(excerpt)}</p><a class="arrow" href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener" aria-label="Открыть новость">→</a></div>
+      <div class="news-image image-${['blue', 'yellow', 'green'][index % 3]}">${image}</div>
+      <div class="news-content"><div class="news-meta"><p class="tag">Новости</p><time class="news-date">${formatDate(item.published_at)}</time></div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(excerpt)}</p><a class="arrow" href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener" aria-label="Открыть новость">→</a></div>
     </article>`;
   }).join('');
 };
