@@ -24,6 +24,14 @@ const formatDate = (value) => {
     : date.toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' });
 };
 
+const truncateText = (value, maxLength = 150) => {
+  const text = String(value || '').replace(/\s+/g, ' ').trim();
+  if (text.length <= maxLength) return text;
+  const lastSpace = text.lastIndexOf(' ', maxLength);
+  const cutAt = lastSpace > 0 ? lastSpace : maxLength;
+  return `${text.slice(0, cutAt).trimEnd()}...`;
+};
+
 const renderNews = (items) => {
   if (!items.length) {
     newsList.innerHTML = '<p class="news-status">Новостей пока нет.</p>';
@@ -34,7 +42,7 @@ const renderNews = (items) => {
     const image = Array.isArray(item.images) && item.images[0]
       ? `<img src="${escapeHtml(item.images[0])}" alt="" loading="lazy" />`
       : '';
-    const excerpt = (item.text || '').replace(/\s+/g, ' ').trim().slice(0, 150);
+    const excerpt = truncateText(item.text);
     return `<article class="news-card ${index === 0 ? 'featured' : ''}">
       <div class="news-image image-${['blue', 'yellow', 'green'][index % 3]}">${image}</div>
       <div class="news-content"><div class="news-meta"><p class="tag">Новости</p><time class="news-date">${formatDate(item.published_at)}</time></div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(excerpt)}</p><a class="arrow" href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener" aria-label="Открыть новость">→</a></div>
