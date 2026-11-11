@@ -43,11 +43,22 @@ const renderNews = (items) => {
       ? `<img src="${escapeHtml(item.images[0])}" alt="" loading="lazy" />`
       : '';
     const excerpt = truncateText(item.text);
-    return `<article class="news-card ${index === 0 ? 'featured' : ''}">
+    return `<article class="news-card ${index === 0 ? 'featured' : ''}" data-url="${escapeHtml(item.source_url)}" tabindex="0" role="link" aria-label="Открыть новость: ${escapeHtml(item.title)}">
       <div class="news-image image-${['blue', 'yellow', 'green'][index % 3]}">${image}</div>
-      <div class="news-content"><div class="news-meta"><p class="tag">Новости</p><time class="news-date">${formatDate(item.published_at)}</time></div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(excerpt)}</p><a class="arrow" href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener" aria-label="Открыть новость">→</a></div>
+      <div class="news-content"><div class="news-meta"><p class="tag">Новости</p><time class="news-date">${formatDate(item.published_at)}</time></div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(excerpt)}</p><a class="arrow" href="${escapeHtml(item.source_url)}" aria-label="Открыть новость">→</a></div>
     </article>`;
   }).join('');
+
+  newsList.querySelectorAll('.news-card').forEach((card) => {
+    const openNews = () => { window.location.href = card.dataset.url; };
+    card.addEventListener('click', openNews);
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openNews();
+      }
+    });
+  });
 };
 
 const loadNews = async () => {
