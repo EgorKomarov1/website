@@ -3,7 +3,10 @@ const nav = document.querySelector('.nav');
 menuButton?.addEventListener('click', () => nav.classList.toggle('is-open'));
 nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('is-open')));
 
-const API_URL = '/api/news?limit=3&page=1';
+const API_BASE_URL = window.location.port === '63342'
+  ? 'http://127.0.0.1:8000'
+  : '';
+const API_URL = `${API_BASE_URL}/api/news?limit=3&page=1`;
 const newsList = document.querySelector('#news-list');
 
 const escapeHtml = (value = '') => String(value)
