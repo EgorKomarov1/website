@@ -4,4 +4,5 @@ SELECT title
        ,images
        ,source_url
 FROM news
-ORDER BY :limit OFFSET :offset;
+ORDER BY published_at DESC NULLS LAST
+LIMIT :limit OFFSET :offset;

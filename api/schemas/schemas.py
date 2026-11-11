@@ -6,4 +6,4 @@ class news_schema(BaseModel):
     published_at: str
     text: str
     images: list
-    source_utl: str
+    source_url: str

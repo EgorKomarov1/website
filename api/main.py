@@ -3,7 +3,7 @@ from database.db import engine
 from contextlib import asynccontextmanager
 
 from database.db import engine
-from routing.routers import router
+from api.routing.routers import router
 
 
 @asynccontextmanager
