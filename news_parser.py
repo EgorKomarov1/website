@@ -9,10 +9,10 @@ from database.db import get_sql, engine
 base_url = 'https://orel-gym19.obr57.ru'
 
 news_paths = list()
-news_records = list()
 
 
 for page in range(1, 32):
+    news_records = []
     listing_response = requests.get(base_url + '/news/?page=' + str(page))
     listing_soup = bs(listing_response.text, 'html.parser')
 
@@ -64,8 +64,8 @@ for page in range(1, 32):
             'published_at': datetime.strptime(news_record['published_at'], '%d.%m.%Y').date(),
             'text': news_record['text'],
             'images': json.dumps(news_record['images'], ensure_ascii=False),
-            'source_url': news_record['source_url']
         })
 
-    with engine.begin() as connection:
-        insert_result = connection.execute(insert_news_query, news_rows)
+    if news_rows:
+        with engine.begin() as connection:
+            insert_result = connection.execute(insert_news_query, news_rows)
