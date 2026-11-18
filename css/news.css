@@ -1,0 +1,17 @@
+.article-page { padding: 48px 0 80px; min-height: 60vh; }
+.article-container { max-width: 860px; }
+.article-back { margin: 0 0 36px; }
+.article-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.article-meta .tag { margin: 0; }
+.article-meta time { color: var(--muted); font-size: 13px; }
+.article-page h1 { font: 600 clamp(30px, 5vw, 52px)/1.15 'Playfair Display', serif; margin: 0 0 32px; overflow-wrap: anywhere; }
+.article-text { font-size: 17px; line-height: 1.85; overflow-wrap: anywhere; }
+.article-text p { margin: 0 0 24px; white-space: pre-line; }
+.article-gallery { display: grid; gap: 24px; margin-top: 36px; }
+.article-gallery:empty { display: none; }
+.article-gallery img { display: block; width: 100%; height: auto; border-radius: 18px; }
+@media (max-width: 800px) {
+  .article-page { padding: 28px 0 48px; }
+  .article-text { font-size: 16px; }
+  .article-back { margin-bottom: 28px; }
+}
