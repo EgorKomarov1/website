@@ -1,4 +1,6 @@
-from api.services.services import news_service
+from uuid import UUID
+
+from api.services.services import news_service, news_detail_service
 from fastapi import APIRouter, Query
 from api.schemas.schemas import news_schema
 
@@ -9,3 +11,8 @@ router = APIRouter()
 def news_router(limit: int = Query(50, ge=1, le=1000),
                 page: int = Query(1, ge=1)):
     return news_service(limit=limit, page=page)
+
+
+@router.get('/api/news/{code}', response_model=news_schema)
+def news_detail_router(code: UUID):
+    return news_detail_service(code)

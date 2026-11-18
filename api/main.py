@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database.db import engine
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
+from pathlib import Path
 
-from database.db import engine
 from api.routing.routers import router
+from api.routing.pages import pages_router
+from database.db import engine
 
 
 @asynccontextmanager
@@ -13,7 +15,7 @@ async def lifespan(app: FastAPI):
 
     engine.dispose()
 
-app = FastAPI(title='news_api')
+app = FastAPI(title='news_api', lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,3 +29,8 @@ app.add_middleware(
 )
 
 app.include_router(router)
+app.include_router(pages_router)
+
+project_directory = Path(__file__).resolve().parents[1]
+for directory in ('css', 'js', 'assets'):
+    app.mount(f'/{directory}', StaticFiles(directory=project_directory / directory), name=directory)
