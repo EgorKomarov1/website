@@ -17,11 +17,11 @@ project_directory = Path(__file__).resolve().parents[2]
 @pages_router.get('/', include_in_schema=False)
 @pages_router.get('/index.html', include_in_schema=False)
 def home_page():
-    return FileResponse(project_directory / 'index.html')
+    return FileResponse(project_directory / 'templates' / 'index.html')
 
 
 def render_news_page(title, description, content, status_code=200):
-    template = Template((project_directory / 'news.html').read_text(encoding='utf-8'))
+    template = Template((project_directory / 'templates' / 'news.html').read_text(encoding='utf-8'))
     return HTMLResponse(template.substitute(
         page_title=escape(title),
         description=escape(description),
